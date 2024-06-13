@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Image Slider</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                width: 100%;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #ede6d6;
+            }
+            .slider-container {
+                width: 800px;
+                height: 350px;
+                position: relative;
+                overflow: hidden;
+                border: 3px solid #ccc;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+            .slides {
+                display: flex;
+                transition: transform 0.5s ease;
+                height: 100%; 
+            }
+            .slide {
+                flex: 0 0 33.33%;
+                height: 100%;
+                overflow: hidden;
+                position: relative;
+            }
+            .slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .controls {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                z-index: 1;
+            }
+            .controls button {
+                background-color: #333;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .controls button:hover {
+                background-color: #555;
+            }
+            .dots {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                z-index: 1;
+            }
+            .dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #bbb;
+                margin: 0 5px;
+                cursor: pointer;
+                transition: background-color 0.6s ease;
+            }
+            .dot.active {
+                background-color: #555;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="slider-container">
+            <div class="slides">
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.42.42_965fed3c - Copy.jpg" alt="Image 1">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.42.43_e44a3da7 - Copy.jpg" alt="Image 2">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.42.43_e44a3da7.jpg" alt="Image 3">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.05.26_491f4a9f.jpg" alt="Image 4">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.05.26_95454229.jpg" alt="Image 5">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.42.43_e44a3da7 - Copy.jpg" alt="Image 6">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.42.43_e44a3da7.jpg" alt="Image 7">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.05.26_491f4a9f.jpg" alt="Image 8">
+                </div>
+                <div class="slide">
+                    <img src="WhatsApp Image 2024-06-12 at 02.05.26_95454229.jpg" alt="Image 9">
+                </div>
+            </div>
+            <div class="dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+        </div>
+        <script>
+            let slideIndex = 0;
+            const slides = document.querySelector('.slides');
+            const totalSlides = document.querySelectorAll('.slide').length;
+
+            function showSlides() {
+                slides.style.transform = `translateX(-${slideIndex * 100 / 3}%)`;
+            }
+
+            function slideNext() {
+                if (slideIndex < totalSlides - 3) {
+                    slideIndex += 3;
+                } else {
+                    slideIndex = 0;
+                }
+                showSlides();
+                updateDots();
+            }
+
+            function slidePrev() {
+                if (slideIndex > 0) {
+                    slideIndex -= 3;
+                } else {
+                    slideIndex = totalSlides - 3;
+                }
+                showSlides();
+                updateDots();
+            }
+
+            function currentSlide(index) {
+                slideIndex = (index - 1) * 3;
+                showSlides();
+                updateDots();
+            }
+
+            function updateDots() {
+                const dots = document.querySelectorAll('.dot');
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[Math.floor(slideIndex / 3)].classList.add('active');
+            }
+
+            // Auto slide every 3 seconds
+            setInterval(() => {
+                slideNext();
+            }, 3000);
+        </script>
+    </body>
+</html>
